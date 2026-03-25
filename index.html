@@ -1,0 +1,2107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML Element Reference</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #f8f9fa;
+    }
+
+    /* ── Layout ── */
+    .page-wrapper {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    site-header, header.site-header {
+      grid-column: 1 / -1;
+      background: #16213e;
+      color: #e2e8f0;
+      padding: 1.5rem 2rem;
+    }
+    header.site-header h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+    header.site-header p  { font-size: 0.95rem; color: #94a3b8; }
+
+    /* ── Nav ── */
+    nav.site-nav {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      background: #0f3460;
+      color: #cbd5e1;
+      padding: 1rem 0;
+      font-size: 0.85rem;
+    }
+    nav.site-nav h2 {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #64748b;
+    }
+    nav.site-nav a {
+      display: block;
+      padding: 0.3rem 1rem;
+      color: #94a3b8;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    nav.site-nav a:hover {
+      color: #e2e8f0;
+      background: rgba(255,255,255,0.05);
+      border-left-color: #3b82f6;
+    }
+
+    /* ── Main content ── */
+    main {
+      padding: 2rem;
+      overflow-x: hidden;
+    }
+
+    /* ── Sections ── */
+    section.ref-section {
+      margin-bottom: 3rem;
+    }
+    section.ref-section > h2 {
+      font-size: 1.4rem;
+      color: #16213e;
+      border-bottom: 2px solid #3b82f6;
+      padding-bottom: 0.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Element cards ── */
+    .element-card {
+      background: #fff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      margin-bottom: 1.25rem;
+      overflow: hidden;
+    }
+    .element-card-header {
+      background: #f1f5f9;
+      padding: 0.6rem 1rem;
+      font-weight: 600;
+      color: #1e40af;
+      font-family: monospace;
+      font-size: 1rem;
+    }
+    .element-card-desc {
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      color: #475569;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .element-card-demo {
+      padding: 1rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .element-card-demo label { font-size: 0.75rem; color: #64748b; display: block; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .element-card-code {
+      padding: 0;
+    }
+    .element-card-code pre {
+      margin: 0;
+      padding: 0.75rem 1rem;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-size: 0.82rem;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .element-card-code code { font-family: 'Fira Code', 'Cascadia Code', monospace; }
+
+    /* ── Demo styles ── */
+    .demo-block { border: 1px dashed #cbd5e1; padding: 0.75rem; border-radius: 4px; background: #f8fafc; }
+
+    /* ── Footer ── */
+    footer.site-footer {
+      grid-column: 1 / -1;
+      background: #16213e;
+      color: #64748b;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.85rem;
+    }
+
+    /* ── Deprecated badge ── */
+    .deprecated-badge {
+      display: inline-block;
+      background: #fee2e2;
+      color: #b91c1c;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .page-wrapper { grid-template-columns: 1fr; }
+      nav.site-nav {
+        position: static;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0.5rem;
+      }
+      nav.site-nav h2 { width: 100%; }
+      nav.site-nav a { padding: 0.25rem 0.5rem; }
+    }
+
+    /* ── Element-specific demo tweaks ── */
+    table.demo-table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+    table.demo-table th, table.demo-table td { border: 1px solid #cbd5e1; padding: 0.4rem 0.6rem; }
+    table.demo-table th { background: #f1f5f9; }
+    table.demo-table caption { caption-side: top; font-weight: 600; margin-bottom: 0.4rem; text-align: left; }
+
+    form.demo-form { display: grid; gap: 0.75rem; max-width: 520px; }
+    form.demo-form label { font-size: 0.85rem; font-weight: 600; display: flex; flex-direction: column; gap: 0.2rem; }
+    form.demo-form input, form.demo-form textarea, form.demo-form select { padding: 0.35rem 0.6rem; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 0.9rem; }
+
+    .canvas-demo { border: 1px solid #cbd5e1; display: block; }
+
+    dialog.demo-dialog { border: 1px solid #cbd5e1; border-radius: 8px; padding: 1.5rem; min-width: 280px; }
+    dialog.demo-dialog::backdrop { background: rgba(0,0,0,0.4); }
+
+    ruby { font-size: 1.1rem; }
+
+    .slot-host { border: 1px solid #cbd5e1; padding: 0.5rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <!-- ══════════════════ HEADER ══════════════════ -->
+  <header class="site-header">
+    <h1>HTML Element Reference</h1>
+    <p>A comprehensive, self-contained showcase of HTML5 elements with live examples and source code.</p>
+  </header>
+
+  <!-- ══════════════════ NAV ══════════════════ -->
+  <nav class="site-nav" aria-label="Section navigation">
+    <h2>Sections</h2>
+    <a href="#doc-structure">1. Document Structure</a>
+    <a href="#text-semantics">2. Text Semantics</a>
+    <a href="#lists">3. Lists</a>
+    <a href="#links-nav">4. Links &amp; Navigation</a>
+    <a href="#images-media">5. Images &amp; Media</a>
+    <a href="#embedded">6. Embedded Content</a>
+    <a href="#tables">7. Tables</a>
+    <a href="#forms">8. Forms</a>
+    <a href="#interactive">9. Interactive Elements</a>
+    <a href="#scripting">10. Scripting &amp; Templates</a>
+    <a href="#ruby">11. Ruby &amp; Annotations</a>
+    <a href="#webcomponents">12. Web Components</a>
+    <a href="#deprecated">13. Deprecated Elements</a>
+  </nav>
+
+  <!-- ══════════════════ MAIN ══════════════════ -->
+  <main>
+
+    <!-- ─────────────────────────────────────────────
+         1. DOCUMENT STRUCTURE AND SEMANTICS
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="doc-structure">
+      <h2>1. Document Structure and Semantics</h2>
+
+      <!-- html -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;html&gt;</div>
+        <div class="element-card-desc">The root element of an HTML page. All other elements are descendants of this element.</div>
+        <div class="element-card-demo"><label>Example (rendered implicitly):</label>
+          <div class="demo-block">Every HTML document starts and ends with <code>&lt;html lang="en"&gt;…&lt;/html&gt;</code>.</div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;html lang="en"&gt;
+  &lt;head&gt;…&lt;/head&gt;
+  &lt;body&gt;…&lt;/body&gt;
+&lt;/html&gt;</code></pre></div>
+      </div>
+
+      <!-- head -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;head&gt;</div>
+        <div class="element-card-desc">Contains machine-readable information (metadata) about the document — title, charset, viewport, linked styles, etc.</div>
+        <div class="element-card-demo"><label>Conceptual representation:</label>
+          <div class="demo-block"><code>&lt;head&gt;</code> is not visible on-page; it holds <code>&lt;meta&gt;</code>, <code>&lt;title&gt;</code>, <code>&lt;link&gt;</code>, and <code>&lt;style&gt;</code>.</div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;head&gt;
+  &lt;meta charset="UTF-8" /&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;title&gt;Page Title&lt;/title&gt;
+&lt;/head&gt;</code></pre></div>
+      </div>
+
+      <!-- title -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;title&gt;</div>
+        <div class="element-card-desc">Defines the document's title shown in the browser tab and used in search results.</div>
+        <div class="element-card-demo"><label>Current page title:</label>
+          <div class="demo-block">This page's title is: <em id="page-title-demo"></em><script>document.getElementById('page-title-demo').textContent = document.title;</script></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;title&gt;HTML Element Reference&lt;/title&gt;</code></pre></div>
+      </div>
+
+      <!-- body -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;body&gt;</div>
+        <div class="element-card-desc">Represents the visible content of the document. There can be only one <code>&lt;body&gt;</code>.</div>
+        <div class="element-card-demo"><label>Note:</label>
+          <div class="demo-block">Everything you see on this page lives inside <code>&lt;body&gt;…&lt;/body&gt;</code>.</div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;body&gt;
+  &lt;h1&gt;Hello World&lt;/h1&gt;
+&lt;/body&gt;</code></pre></div>
+      </div>
+
+      <!-- header -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;header&gt;</div>
+        <div class="element-card-desc">Represents introductory content or a group of navigational aids. Typically contains a heading and site navigation.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <header style="background:#1e3a5f;color:#fff;padding:0.75rem 1rem;border-radius:4px;">
+              <h1 style="font-size:1.1rem;margin:0;">Site Name</h1>
+              <p style="margin:0;font-size:0.8rem;opacity:0.8;">Tagline here</p>
+            </header>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;header&gt;
+  &lt;h1&gt;Site Name&lt;/h1&gt;
+  &lt;p&gt;Tagline here&lt;/p&gt;
+&lt;/header&gt;</code></pre></div>
+      </div>
+
+      <!-- nav -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;nav&gt;</div>
+        <div class="element-card-desc">Defines a set of navigation links. Used for primary site menus and table-of-contents.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <nav aria-label="Demo nav" style="background:#f1f5f9;padding:0.5rem;border-radius:4px;">
+              <a href="#" style="margin-right:1rem;">Home</a>
+              <a href="#" style="margin-right:1rem;">About</a>
+              <a href="#">Contact</a>
+            </nav>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;nav aria-label="Main"&gt;
+  &lt;a href="/"&gt;Home&lt;/a&gt;
+  &lt;a href="/about"&gt;About&lt;/a&gt;
+  &lt;a href="/contact"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;</code></pre></div>
+      </div>
+
+      <!-- main -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;main&gt;</div>
+        <div class="element-card-desc">Specifies the dominant content of the <code>&lt;body&gt;</code>. Must be unique in the document.</div>
+        <div class="element-card-demo"><label>Structure note:</label>
+          <div class="demo-block">The entire reference content you're reading is inside <code>&lt;main&gt;</code>.</div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;main&gt;
+  &lt;h1&gt;Main Content&lt;/h1&gt;
+  &lt;p&gt;Primary content goes here.&lt;/p&gt;
+&lt;/main&gt;</code></pre></div>
+      </div>
+
+      <!-- section -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;section&gt;</div>
+        <div class="element-card-desc">Represents a standalone section of a document that doesn't have a more specific semantic element.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <section style="border-left:3px solid #3b82f6;padding-left:0.75rem;">
+              <h3 style="margin-bottom:0.25rem;">About Us</h3>
+              <p>We build great things.</p>
+            </section>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;section&gt;
+  &lt;h2&gt;About Us&lt;/h2&gt;
+  &lt;p&gt;We build great things.&lt;/p&gt;
+&lt;/section&gt;</code></pre></div>
+      </div>
+
+      <!-- article -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;article&gt;</div>
+        <div class="element-card-desc">Represents a self-contained composition such as a blog post, news story, or forum post.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <article style="border:1px solid #e2e8f0;padding:0.75rem;border-radius:4px;">
+              <h3 style="margin-bottom:0.25rem;">Post Title</h3>
+              <time datetime="2024-01-15">January 15, 2024</time>
+              <p style="margin-top:0.4rem;">Article body text goes here.</p>
+            </article>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;article&gt;
+  &lt;h2&gt;Post Title&lt;/h2&gt;
+  &lt;time datetime="2024-01-15"&gt;January 15, 2024&lt;/time&gt;
+  &lt;p&gt;Article body text goes here.&lt;/p&gt;
+&lt;/article&gt;</code></pre></div>
+      </div>
+
+      <!-- aside -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;aside&gt;</div>
+        <div class="element-card-desc">Represents content tangentially related to the surrounding content — sidebars, call-out boxes, etc.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <aside style="background:#fef3c7;border-left:4px solid #f59e0b;padding:0.6rem 0.9rem;border-radius:0 4px 4px 0;">
+              <strong>💡 Tip:</strong> Use <code>&lt;aside&gt;</code> for sidebars and supplemental content.
+            </aside>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;aside&gt;
+  &lt;p&gt;Related content or a tip goes here.&lt;/p&gt;
+&lt;/aside&gt;</code></pre></div>
+      </div>
+
+      <!-- footer -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;footer&gt;</div>
+        <div class="element-card-desc">Represents a footer for its nearest sectioning content — usually contains authorship, copyright, or related links.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <footer style="background:#1e293b;color:#94a3b8;padding:0.6rem 1rem;border-radius:4px;font-size:0.85rem;">
+              <p>&copy; 2024 Example Site. All rights reserved.</p>
+            </footer>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;footer&gt;
+  &lt;p&gt;&amp;copy; 2024 Example Site.&lt;/p&gt;
+&lt;/footer&gt;</code></pre></div>
+      </div>
+
+      <!-- h1-h6 -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;h1&gt; – &lt;h6&gt;</div>
+        <div class="element-card-desc">Six levels of section headings. <code>&lt;h1&gt;</code> is highest (most important), <code>&lt;h6&gt;</code> is lowest.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <h1 style="font-size:2rem;margin:0.1rem 0">Heading 1</h1>
+            <h2 style="font-size:1.6rem;margin:0.1rem 0">Heading 2</h2>
+            <h3 style="font-size:1.3rem;margin:0.1rem 0">Heading 3</h3>
+            <h4 style="font-size:1.1rem;margin:0.1rem 0">Heading 4</h4>
+            <h5 style="font-size:0.95rem;margin:0.1rem 0">Heading 5</h5>
+            <h6 style="font-size:0.85rem;margin:0.1rem 0">Heading 6</h6>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;h1&gt;Heading 1&lt;/h1&gt;
+&lt;h2&gt;Heading 2&lt;/h2&gt;
+&lt;h3&gt;Heading 3&lt;/h3&gt;
+&lt;h4&gt;Heading 4&lt;/h4&gt;
+&lt;h5&gt;Heading 5&lt;/h5&gt;
+&lt;h6&gt;Heading 6&lt;/h6&gt;</code></pre></div>
+      </div>
+
+      <!-- p -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;p&gt;</div>
+        <div class="element-card-desc">Defines a paragraph of text. Browsers automatically add margin before and after each paragraph.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <p>This is the first paragraph. It contains some sentences to show how a paragraph is displayed.</p>
+            <p>This is the second paragraph. Notice the space between paragraphs.</p>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;First paragraph.&lt;/p&gt;
+&lt;p&gt;Second paragraph.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- hr -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;hr&gt;</div>
+        <div class="element-card-desc">Represents a thematic break between paragraphs or sections — rendered as a horizontal rule.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <p>Content above the rule.</p>
+            <hr />
+            <p>Content below the rule.</p>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Section one ends here.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Section two begins here.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- br -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;br&gt;</div>
+        <div class="element-card-desc">Produces a line break in text. Useful for poetry or addresses.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <p>Line one.<br />Line two.<br />Line three.</p>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Line one.&lt;br /&gt;Line two.&lt;br /&gt;Line three.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- address -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;address&gt;</div>
+        <div class="element-card-desc">Provides contact information for its nearest <code>&lt;article&gt;</code> or <code>&lt;body&gt;</code> ancestor.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <address>
+              Written by <a href="mailto:jane@example.com">Jane Doe</a>.<br />
+              123 Main Street,<br />
+              Springfield, USA.
+            </address>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;address&gt;
+  Written by &lt;a href="mailto:jane@example.com"&gt;Jane Doe&lt;/a&gt;.&lt;br /&gt;
+  123 Main Street, Springfield, USA.
+&lt;/address&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /doc-structure -->
+
+
+    <!-- ─────────────────────────────────────────────
+         2. TEXT-LEVEL SEMANTICS
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="text-semantics">
+      <h2>2. Text-Level Semantics</h2>
+
+      <!-- strong -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;strong&gt;</div>
+        <div class="element-card-desc">Indicates strong importance — rendered bold by default.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>Please <strong>do not</strong> press the red button.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Please &lt;strong&gt;do not&lt;/strong&gt; press the red button.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- em -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;em&gt;</div>
+        <div class="element-card-desc">Marks text with stress emphasis — rendered italic by default.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>I <em>really</em> like HTML.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;I &lt;em&gt;really&lt;/em&gt; like HTML.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- b -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;b&gt;</div>
+        <div class="element-card-desc">Draws attention to text without implying importance — rendered bold. Use <code>&lt;strong&gt;</code> for important text.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>The keyword is <b>accessibility</b>.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;The keyword is &lt;b&gt;accessibility&lt;/b&gt;.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- i -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;i&gt;</div>
+        <div class="element-card-desc">Represents text set off from normal prose — technical terms, foreign phrases, thoughts. Rendered italic.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>The Latin phrase <i>carpe diem</i> means "seize the day".</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;The Latin phrase &lt;i&gt;carpe diem&lt;/i&gt; means "seize the day".&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- u -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;u&gt;</div>
+        <div class="element-card-desc">Represents text with a non-textual annotation — misspelled words, proper names in Chinese. Rendered with underline.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>This word is <u>misspelled</u>.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;This word is &lt;u&gt;mispelled&lt;/u&gt;.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- small -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;small&gt;</div>
+        <div class="element-card-desc">Represents side comments, fine print — copyright notices, legal text.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>Buy now! <small>Offer valid while supplies last.</small></p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Buy now! &lt;small&gt;Offer valid while supplies last.&lt;/small&gt;&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- mark -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;mark&gt;</div>
+        <div class="element-card-desc">Highlights text for reference or notation purposes — rendered with yellow background by default.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>Search results: the term <mark>HTML</mark> was found 42 times.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Search results: the term &lt;mark&gt;HTML&lt;/mark&gt; was found 42 times.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- del -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;del&gt;</div>
+        <div class="element-card-desc">Represents text that has been deleted from a document — rendered with strikethrough.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>Price: <del>$99</del> $49</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Price: &lt;del&gt;$99&lt;/del&gt; $49&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- ins -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;ins&gt;</div>
+        <div class="element-card-desc">Represents text that has been inserted into a document — rendered with underline.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>The meeting is <del>Tuesday</del> <ins>Wednesday</ins>.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;The meeting is &lt;del&gt;Tuesday&lt;/del&gt; &lt;ins&gt;Wednesday&lt;/ins&gt;.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- sub -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;sub&gt;</div>
+        <div class="element-card-desc">Specifies inline text displayed as subscript — used in chemical formulas and mathematical expressions.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>Water is H<sub>2</sub>O.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Water is H&lt;sub&gt;2&lt;/sub&gt;O.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- sup -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;sup&gt;</div>
+        <div class="element-card-desc">Specifies inline text displayed as superscript — used in exponents and footnote markers.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>E = mc<sup>2</sup></p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;E = mc&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- s -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;s&gt;</div>
+        <div class="element-card-desc">Renders text with a strikethrough, indicating that it is no longer relevant (but not deleted).</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p><s>Only 5 left in stock</s> — sold out!</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;&lt;s&gt;Only 5 left in stock&lt;/s&gt; — sold out!&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- abbr -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;abbr&gt;</div>
+        <div class="element-card-desc">Represents an abbreviation or acronym. The <code>title</code> attribute provides the full description.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>I love <abbr title="HyperText Markup Language">HTML</abbr>.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;abbr title="HyperText Markup Language"&gt;HTML&lt;/abbr&gt;</code></pre></div>
+      </div>
+
+      <!-- dfn -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;dfn&gt;</div>
+        <div class="element-card-desc">Marks the defining instance of a term — used when introducing a term for the first time.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>A <dfn>browser</dfn> is software used to access the internet.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;A &lt;dfn&gt;browser&lt;/dfn&gt; is software used to access the internet.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- cite -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;cite&gt;</div>
+        <div class="element-card-desc">References a creative work — books, articles, films, etc. Rendered italic by default.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>My favourite book is <cite>The Pragmatic Programmer</cite>.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;My favourite book is &lt;cite&gt;The Pragmatic Programmer&lt;/cite&gt;.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- q -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;q&gt;</div>
+        <div class="element-card-desc">Represents a short inline quotation. Browsers add quotation marks automatically.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>Tim said: <q cite="https://example.com">The Web is for everyone.</q></p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Tim said: &lt;q cite="https://example.com"&gt;The Web is for everyone.&lt;/q&gt;&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- blockquote -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;blockquote&gt;</div>
+        <div class="element-card-desc">Represents a section quoted from another source. Use the <code>cite</code> attribute to link the source.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <blockquote cite="https://example.com" style="border-left:4px solid #3b82f6;padding-left:1rem;color:#475569;font-style:italic;">
+              <p>Programs must be written for people to read, and only incidentally for machines to execute.</p>
+              <footer>— Harold Abelson</footer>
+            </blockquote>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;blockquote cite="https://example.com"&gt;
+  &lt;p&gt;Programs must be written for people to read…&lt;/p&gt;
+  &lt;footer&gt;— Harold Abelson&lt;/footer&gt;
+&lt;/blockquote&gt;</code></pre></div>
+      </div>
+
+      <!-- code -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;code&gt;</div>
+        <div class="element-card-desc">Displays inline computer code in monospace font.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>Use the <code>document.querySelector()</code> method to select elements.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Use the &lt;code&gt;document.querySelector()&lt;/code&gt; method.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- samp -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;samp&gt;</div>
+        <div class="element-card-desc">Represents sample output from a computer program.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>The program output was: <samp>Hello, World!</samp></p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Output: &lt;samp&gt;Hello, World!&lt;/samp&gt;&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- kbd -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;kbd&gt;</div>
+        <div class="element-card-desc">Represents keyboard input — keys or key combinations the user should press.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <p>Press <kbd style="border:1px solid #cbd5e1;padding:0.1rem 0.4rem;border-radius:3px;background:#f1f5f9;">Ctrl</kbd> + <kbd style="border:1px solid #cbd5e1;padding:0.1rem 0.4rem;border-radius:3px;background:#f1f5f9;">C</kbd> to copy.</p>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;Press &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt; to copy.&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- var -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;var&gt;</div>
+        <div class="element-card-desc">Represents a variable in mathematical or programming context.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>The equation is: <var>x</var> + <var>y</var> = <var>z</var></p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;p&gt;&lt;var&gt;x&lt;/var&gt; + &lt;var&gt;y&lt;/var&gt; = &lt;var&gt;z&lt;/var&gt;&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- pre -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;pre&gt;</div>
+        <div class="element-card-desc">Represents preformatted text — whitespace is preserved exactly as written.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <pre style="background:#f1f5f9;padding:0.5rem;border-radius:4px;font-size:0.85rem;">function greet(name) {
+  return "Hello, " + name + "!";
+}</pre>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;pre&gt;function greet(name) {
+  return "Hello, " + name + "!";
+}&lt;/pre&gt;</code></pre></div>
+      </div>
+
+      <!-- time -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;time&gt;</div>
+        <div class="element-card-desc">Represents a specific period in time. The <code>datetime</code> attribute holds the machine-readable value.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>The event is on <time datetime="2024-06-21">June 21, 2024</time>.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;time datetime="2024-06-21"&gt;June 21, 2024&lt;/time&gt;</code></pre></div>
+      </div>
+
+      <!-- data -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;data&gt;</div>
+        <div class="element-card-desc">Links content to a machine-readable translation using the <code>value</code> attribute.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block"><p>Product: <data value="sku-00142">Widget Pro</data></p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;data value="sku-00142"&gt;Widget Pro&lt;/data&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /text-semantics -->
+
+
+    <!-- ─────────────────────────────────────────────
+         3. LISTS
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="lists">
+      <h2>3. Lists</h2>
+
+      <!-- ul -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;ul&gt;</div>
+        <div class="element-card-desc">Represents an unordered list of items, typically rendered as bullet points.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <ul>
+              <li>Apples</li>
+              <li>Bananas</li>
+              <li>Cherries</li>
+            </ul>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;ul&gt;
+  &lt;li&gt;Apples&lt;/li&gt;
+  &lt;li&gt;Bananas&lt;/li&gt;
+  &lt;li&gt;Cherries&lt;/li&gt;
+&lt;/ul&gt;</code></pre></div>
+      </div>
+
+      <!-- ol -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;ol&gt;</div>
+        <div class="element-card-desc">Represents an ordered list of items, typically rendered as numbered list.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <ol>
+              <li>Mix ingredients</li>
+              <li>Preheat oven to 180°C</li>
+              <li>Bake for 30 minutes</li>
+            </ol>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;ol&gt;
+  &lt;li&gt;Mix ingredients&lt;/li&gt;
+  &lt;li&gt;Preheat oven to 180°C&lt;/li&gt;
+  &lt;li&gt;Bake for 30 minutes&lt;/li&gt;
+&lt;/ol&gt;</code></pre></div>
+      </div>
+
+      <!-- li -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;li&gt;</div>
+        <div class="element-card-desc">Represents a list item. Used inside <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, or <code>&lt;menu&gt;</code>.</div>
+        <div class="element-card-demo"><label>Live example (with value attribute in ol):</label>
+          <div class="demo-block">
+            <ol>
+              <li value="5">Item starting at 5</li>
+              <li>Item 6</li>
+              <li>Item 7</li>
+            </ol>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;ol&gt;
+  &lt;li value="5"&gt;Item starting at 5&lt;/li&gt;
+  &lt;li&gt;Item 6&lt;/li&gt;
+&lt;/ol&gt;</code></pre></div>
+      </div>
+
+      <!-- dl / dt / dd -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;dl&gt;, &lt;dt&gt;, &lt;dd&gt;</div>
+        <div class="element-card-desc"><code>&lt;dl&gt;</code> is a description list; <code>&lt;dt&gt;</code> is a term; <code>&lt;dd&gt;</code> is the description for that term.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <dl>
+              <dt><strong>HTML</strong></dt>
+              <dd>HyperText Markup Language — the building block of the web.</dd>
+              <dt><strong>CSS</strong></dt>
+              <dd>Cascading Style Sheets — used to style and layout web pages.</dd>
+              <dt><strong>JavaScript</strong></dt>
+              <dd>A scripting language enabling interactive web content.</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;dl&gt;
+  &lt;dt&gt;HTML&lt;/dt&gt;
+  &lt;dd&gt;HyperText Markup Language.&lt;/dd&gt;
+  &lt;dt&gt;CSS&lt;/dt&gt;
+  &lt;dd&gt;Cascading Style Sheets.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /lists -->
+
+
+    <!-- ─────────────────────────────────────────────
+         4. LINKS AND NAVIGATION
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="links-nav">
+      <h2>4. Links and Navigation</h2>
+
+      <!-- a -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;a&gt;</div>
+        <div class="element-card-desc">Creates a hyperlink to web pages, files, email addresses, phone numbers, or locations within the same page.</div>
+        <div class="element-card-demo"><label>Live examples:</label>
+          <div class="demo-block">
+            <p><a href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer">MDN Web Docs (opens in new tab)</a></p>
+            <p><a href="#doc-structure">Jump to Section 1 (in-page anchor)</a></p>
+            <p><a href="mailto:hello@example.com">Send an email</a></p>
+            <p><a href="tel:+15551234567">Call us: +1 555 123 4567</a></p>
+            <p><a href="page.pdf" download>Download PDF</a></p>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- External link --&gt;
+&lt;a href="https://example.com" target="_blank" rel="noopener noreferrer"&gt;
+  External Site
+&lt;/a&gt;
+
+&lt;!-- In-page anchor --&gt;
+&lt;a href="#section-id"&gt;Jump to section&lt;/a&gt;
+
+&lt;!-- Email link --&gt;
+&lt;a href="mailto:hello@example.com"&gt;Send email&lt;/a&gt;
+
+&lt;!-- Phone link --&gt;
+&lt;a href="tel:+15551234567"&gt;+1 555 123 4567&lt;/a&gt;
+
+&lt;!-- Download link --&gt;
+&lt;a href="file.pdf" download&gt;Download PDF&lt;/a&gt;</code></pre></div>
+      </div>
+
+      <!-- nav (detailed) -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;nav&gt; (breadcrumb example)</div>
+        <div class="element-card-desc">Navigation can represent breadcrumbs, page links, menus, and more.</div>
+        <div class="element-card-demo"><label>Breadcrumb example:</label>
+          <div class="demo-block">
+            <nav aria-label="Breadcrumb">
+              <ol style="list-style:none;display:flex;gap:0.5rem;padding:0;">
+                <li><a href="#">Home</a></li>
+                <li aria-hidden="true">›</li>
+                <li><a href="#">Docs</a></li>
+                <li aria-hidden="true">›</li>
+                <li aria-current="page">HTML Reference</li>
+              </ol>
+            </nav>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;nav aria-label="Breadcrumb"&gt;
+  &lt;ol&gt;
+    &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/docs"&gt;Docs&lt;/a&gt;&lt;/li&gt;
+    &lt;li aria-current="page"&gt;HTML Reference&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /links-nav -->
+
+
+    <!-- ─────────────────────────────────────────────
+         5. IMAGES AND MEDIA
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="images-media">
+      <h2>5. Images and Media</h2>
+
+      <!-- img -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;img&gt;</div>
+        <div class="element-card-desc">Embeds an image. The <code>alt</code> attribute is required for accessibility.</div>
+        <div class="element-card-demo"><label>Live example (SVG placeholder):</label>
+          <div class="demo-block">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='120'%3E%3Crect width='200' height='120' fill='%23e2e8f0'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%23475569'%3EExample Image%3C/text%3E%3C/svg%3E"
+                 alt="A placeholder showing example image dimensions 200×120"
+                 width="200" height="120" />
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;img
+  src="photo.jpg"
+  alt="A description of the image"
+  width="200"
+  height="120"
+/&gt;</code></pre></div>
+      </div>
+
+      <!-- figure / figcaption -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;figure&gt;, &lt;figcaption&gt;</div>
+        <div class="element-card-desc"><code>&lt;figure&gt;</code> groups self-contained content like images, diagrams, or code. <code>&lt;figcaption&gt;</code> provides a caption.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <figure style="display:inline-block;margin:0;text-align:center;">
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='100'%3E%3Crect width='160' height='100' fill='%23dbeafe'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%231e40af'%3EMountain View%3C/text%3E%3C/svg%3E"
+                   alt="A scenic mountain view" width="160" height="100" />
+              <figcaption>Fig. 1 — A scenic mountain view at dawn.</figcaption>
+            </figure>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;figure&gt;
+  &lt;img src="mountain.jpg" alt="A scenic mountain view" /&gt;
+  &lt;figcaption&gt;Fig. 1 — A scenic mountain view at dawn.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre></div>
+      </div>
+
+      <!-- picture / source -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;picture&gt;, &lt;source&gt;</div>
+        <div class="element-card-desc"><code>&lt;picture&gt;</code> provides multiple image sources for different screen sizes or formats. The browser picks the best <code>&lt;source&gt;</code>.</div>
+        <div class="element-card-demo"><label>Conceptual example (sources use placeholder):</label>
+          <div class="demo-block">
+            <picture>
+              <source media="(min-width: 800px)"
+                      srcset="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='80'%3E%3Crect width='300' height='80' fill='%23dcfce7'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%23166534'%3EWide Screen (300px)%3C/text%3E%3C/svg%3E" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='80'%3E%3Crect width='150' height='80' fill='%23fef9c3'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='11' fill='%23713f12'%3ENarrow (150px)%3C/text%3E%3C/svg%3E"
+                   alt="Responsive image example" />
+            </picture>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;picture&gt;
+  &lt;source media="(min-width: 800px)" srcset="wide.webp" /&gt;
+  &lt;source srcset="narrow.webp" /&gt;
+  &lt;img src="fallback.jpg" alt="Responsive image" /&gt;
+&lt;/picture&gt;</code></pre></div>
+      </div>
+
+      <!-- audio -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;audio&gt;</div>
+        <div class="element-card-desc">Embeds audio content. Use <code>&lt;source&gt;</code> children for multiple formats and fallback text for unsupported browsers.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <audio controls>
+              <source src="audio.mp3" type="audio/mpeg" />
+              <source src="audio.ogg" type="audio/ogg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;audio controls&gt;
+  &lt;source src="audio.mp3" type="audio/mpeg" /&gt;
+  &lt;source src="audio.ogg" type="audio/ogg" /&gt;
+  Your browser does not support the audio element.
+&lt;/audio&gt;</code></pre></div>
+      </div>
+
+      <!-- video -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;video&gt;</div>
+        <div class="element-card-desc">Embeds video content with optional controls, poster image, and multiple source formats.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <video controls width="320" height="180"
+                   poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180'%3E%3Crect width='320' height='180' fill='%23111827'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='14' fill='%23e5e7eb'%3E▶ Video Poster%3C/text%3E%3C/svg%3E">
+              <source src="video.mp4" type="video/mp4" />
+              <source src="video.webm" type="video/webm" />
+              <track kind="subtitles" srclang="en" label="English" src="subtitles.vtt" />
+              Your browser does not support the video element.
+            </video>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;video controls width="320" height="180" poster="thumb.jpg"&gt;
+  &lt;source src="video.mp4" type="video/mp4" /&gt;
+  &lt;source src="video.webm" type="video/webm" /&gt;
+  &lt;track kind="subtitles" srclang="en" label="English" src="subs.vtt" /&gt;
+  Your browser does not support the video element.
+&lt;/video&gt;</code></pre></div>
+      </div>
+
+      <!-- track -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;track&gt;</div>
+        <div class="element-card-desc">Specifies timed text tracks (subtitles, captions, chapters) for <code>&lt;video&gt;</code> and <code>&lt;audio&gt;</code>.</div>
+        <div class="element-card-demo"><label>Note:</label>
+          <div class="demo-block"><p><code>&lt;track&gt;</code> is shown in the <code>&lt;video&gt;</code> example above.</p></div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;track
+  kind="subtitles"
+  srclang="en"
+  label="English"
+  src="subtitles.vtt"
+  default
+/&gt;</code></pre></div>
+      </div>
+
+      <!-- map / area -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;map&gt;, &lt;area&gt;</div>
+        <div class="element-card-desc"><code>&lt;map&gt;</code> defines an image map (clickable regions). <code>&lt;area&gt;</code> defines each hotspot region.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='100'%3E%3Crect width='150' height='100' fill='%23bfdbfe'/%3E%3Crect x='150' width='150' height='100' fill='%23bbf7d0'/%3E%3Ctext x='75' y='55' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%231e40af'%3ELeft Zone%3C/text%3E%3Ctext x='225' y='55' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%23166534'%3ERight Zone%3C/text%3E%3C/svg%3E"
+                 alt="Image map demo — left and right zones"
+                 usemap="#demo-map" width="300" height="100" />
+            <map name="demo-map">
+              <area shape="rect" coords="0,0,150,100" href="#images-media" alt="Left Zone" title="Click: Left Zone" />
+              <area shape="rect" coords="150,0,300,100" href="#images-media" alt="Right Zone" title="Click: Right Zone" />
+            </map>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;img src="map.png" usemap="#mymap" alt="Image map" /&gt;
+&lt;map name="mymap"&gt;
+  &lt;area shape="rect" coords="0,0,150,100"
+        href="/left" alt="Left Zone" /&gt;
+  &lt;area shape="circle" coords="200,50,40"
+        href="/circle" alt="Circle Zone" /&gt;
+&lt;/map&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /images-media -->
+
+
+    <!-- ─────────────────────────────────────────────
+         6. EMBEDDED CONTENT
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="embedded">
+      <h2>6. Embedded Content</h2>
+
+      <!-- iframe -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;iframe&gt;</div>
+        <div class="element-card-desc">Embeds an independent browsing context (another HTML page) inside the current page.</div>
+        <div class="element-card-demo"><label>Live example (srcdoc):</label>
+          <div class="demo-block">
+            <iframe srcdoc="&lt;html&gt;&lt;body style='font-family:sans-serif;padding:8px;background:#f0f9ff;'&gt;&lt;p&gt;Hello from an &lt;strong&gt;iframe&lt;/strong&gt;!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;"
+                    title="Embedded iframe example"
+                    width="100%" height="80"
+                    style="border:1px solid #cbd5e1;border-radius:4px;"></iframe>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;iframe
+  src="https://example.com"
+  title="Embedded page"
+  width="600"
+  height="400"
+  sandbox="allow-scripts allow-same-origin"
+  loading="lazy"
+&gt;&lt;/iframe&gt;</code></pre></div>
+      </div>
+
+      <!-- embed -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;embed&gt;</div>
+        <div class="element-card-desc">Embeds external content such as PDF documents or interactive plugins.</div>
+        <div class="element-card-demo"><label>Live example (embedded inline SVG via data URI):</label>
+          <div class="demo-block">
+            <embed src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='60'%3E%3Crect width='240' height='60' fill='%23e0f2fe'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='13' fill='%230369a1'%3ESVGembedded via %26lt%3Bembed%26gt%3B%3C/text%3E%3C/svg%3E"
+                   type="image/svg+xml"
+                   width="240" height="60" />
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;embed
+  src="document.pdf"
+  type="application/pdf"
+  width="600"
+  height="400"
+/&gt;</code></pre></div>
+      </div>
+
+      <!-- object / param -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;object&gt;, &lt;param&gt;</div>
+        <div class="element-card-desc"><code>&lt;object&gt;</code> embeds an external resource (PDF, SVG). <code>&lt;param&gt;</code> provides parameters to the object.</div>
+        <div class="element-card-demo"><label>Example:</label>
+          <div class="demo-block">
+            <object data="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='60'%3E%3Crect width='200' height='60' fill='%23f3e8ff'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%237c3aed'%3ESVGvia &lt;object&gt;%3C/text%3E%3C/svg%3E"
+                   type="image/svg+xml"
+                   width="200" height="60">
+              <param name="quality" value="high" />
+              Fallback content for browsers that don't support this object.
+            </object>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;object data="document.pdf" type="application/pdf"
+        width="600" height="400"&gt;
+  &lt;param name="quality" value="high" /&gt;
+  &lt;p&gt;Fallback: &lt;a href="document.pdf"&gt;Download PDF&lt;/a&gt;&lt;/p&gt;
+&lt;/object&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /embedded -->
+
+
+    <!-- ─────────────────────────────────────────────
+         7. TABLES
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="tables">
+      <h2>7. Tables</h2>
+
+      <div class="element-card">
+        <div class="element-card-header">&lt;table&gt;, &lt;caption&gt;, &lt;colgroup&gt;, &lt;col&gt;, &lt;thead&gt;, &lt;tbody&gt;, &lt;tfoot&gt;, &lt;tr&gt;, &lt;th&gt;, &lt;td&gt;</div>
+        <div class="element-card-desc">Complete table structure. <code>&lt;caption&gt;</code> provides a title; <code>&lt;colgroup&gt;</code>/<code>&lt;col&gt;</code> style columns; <code>&lt;thead&gt;</code>/<code>&lt;tbody&gt;</code>/<code>&lt;tfoot&gt;</code> group rows; <code>&lt;th&gt;</code> are header cells; <code>&lt;td&gt;</code> are data cells.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <table class="demo-table">
+              <caption>Q1 Sales Report</caption>
+              <colgroup>
+                <col style="width:35%" />
+                <col style="width:25%;background:#f8fafc" />
+                <col style="width:20%" />
+                <col style="width:20%" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th scope="col">Product</th>
+                  <th scope="col">Jan</th>
+                  <th scope="col">Feb</th>
+                  <th scope="col">Mar</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Widget A</td>
+                  <td>120</td>
+                  <td>145</td>
+                  <td>130</td>
+                </tr>
+                <tr>
+                  <td>Widget B</td>
+                  <td>80</td>
+                  <td>95</td>
+                  <td>110</td>
+                </tr>
+                <tr>
+                  <td>Widget C</td>
+                  <td>60</td>
+                  <td>72</td>
+                  <td>88</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th scope="row">Total</th>
+                  <td>260</td>
+                  <td>312</td>
+                  <td>328</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;table&gt;
+  &lt;caption&gt;Q1 Sales Report&lt;/caption&gt;
+  &lt;colgroup&gt;
+    &lt;col style="width:35%" /&gt;
+    &lt;col style="width:25%;background:#f8fafc" /&gt;
+    &lt;col style="width:20%" /&gt;
+    &lt;col style="width:20%" /&gt;
+  &lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Product&lt;/th&gt;
+      &lt;th scope="col"&gt;Jan&lt;/th&gt;
+      &lt;th scope="col"&gt;Feb&lt;/th&gt;
+      &lt;th scope="col"&gt;Mar&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Widget A&lt;/td&gt;
+      &lt;td&gt;120&lt;/td&gt;
+      &lt;td&gt;145&lt;/td&gt;
+      &lt;td&gt;130&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Total&lt;/th&gt;
+      &lt;td&gt;260&lt;/td&gt;
+      &lt;td&gt;312&lt;/td&gt;
+      &lt;td&gt;328&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /tables -->
+
+
+    <!-- ─────────────────────────────────────────────
+         8. FORMS
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="forms">
+      <h2>8. Forms</h2>
+
+      <!-- form -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;form&gt;</div>
+        <div class="element-card-desc">Defines an HTML form for user input. Contains various input controls that send data to a server.</div>
+        <div class="element-card-demo"><label>Complete form showcase:</label>
+          <div class="demo-block">
+            <form class="demo-form" action="#" method="post" onsubmit="event.preventDefault(); alert('Form submitted! (demo — no data sent)')">
+
+              <fieldset style="border:1px solid #cbd5e1;padding:1rem;border-radius:6px;">
+                <legend style="padding:0 0.4rem;font-weight:600;">Personal Information</legend>
+
+                <!-- text -->
+                <label>
+                  Full Name
+                  <input type="text" name="fullname" placeholder="Jane Doe" required />
+                </label>
+
+                <!-- email -->
+                <label>
+                  Email Address
+                  <input type="email" name="email" placeholder="jane@example.com" required />
+                </label>
+
+                <!-- password -->
+                <label>
+                  Password
+                  <input type="password" name="password" placeholder="Min. 8 characters" minlength="8" required />
+                </label>
+
+                <!-- number -->
+                <label>
+                  Age
+                  <input type="number" name="age" min="1" max="120" step="1" placeholder="25" />
+                </label>
+
+                <!-- tel -->
+                <label>
+                  Phone Number
+                  <input type="tel" name="phone" placeholder="+1 555 000 0000" />
+                </label>
+
+                <!-- url -->
+                <label>
+                  Website
+                  <input type="url" name="website" placeholder="https://example.com" />
+                </label>
+
+              </fieldset>
+
+              <fieldset style="border:1px solid #cbd5e1;padding:1rem;border-radius:6px;">
+                <legend style="padding:0 0.4rem;font-weight:600;">Search &amp; Lookup</legend>
+
+                <!-- search -->
+                <label>
+                  Search
+                  <input type="search" name="q" placeholder="Search…" />
+                </label>
+
+                <!-- datalist -->
+                <label>
+                  Favorite Programming Language
+                  <input type="text" list="languages-list" name="language" placeholder="Start typing…" />
+                  <datalist id="languages-list">
+                    <option value="HTML" />
+                    <option value="CSS" />
+                    <option value="JavaScript" />
+                    <option value="Python" />
+                    <option value="Rust" />
+                    <option value="Go" />
+                  </datalist>
+                </label>
+              </fieldset>
+
+              <fieldset style="border:1px solid #cbd5e1;padding:1rem;border-radius:6px;">
+                <legend style="padding:0 0.4rem;font-weight:600;">Date &amp; Time Inputs</legend>
+
+                <!-- date -->
+                <label>
+                  Date
+                  <input type="date" name="date" />
+                </label>
+
+                <!-- time -->
+                <label>
+                  Time
+                  <input type="time" name="time" />
+                </label>
+
+                <!-- datetime-local -->
+                <label>
+                  Date &amp; Time
+                  <input type="datetime-local" name="datetime" />
+                </label>
+
+                <!-- month -->
+                <label>
+                  Month
+                  <input type="month" name="month" />
+                </label>
+
+                <!-- week -->
+                <label>
+                  Week
+                  <input type="week" name="week" />
+                </label>
+
+              </fieldset>
+
+              <fieldset style="border:1px solid #cbd5e1;padding:1rem;border-radius:6px;">
+                <legend style="padding:0 0.4rem;font-weight:600;">Range, Color &amp; File</legend>
+
+                <!-- range -->
+                <label>
+                  Volume: <output id="range-out">50</output>
+                  <input type="range" name="volume" min="0" max="100" step="5" value="50"
+                         oninput="document.getElementById('range-out').value = this.value" />
+                </label>
+
+                <!-- color -->
+                <label>
+                  Favorite Color
+                  <input type="color" name="color" value="#3b82f6" />
+                </label>
+
+                <!-- file (multiple) -->
+                <label>
+                  Upload Files
+                  <input type="file" name="files" multiple accept="image/*,.pdf" />
+                </label>
+
+              </fieldset>
+
+              <fieldset style="border:1px solid #cbd5e1;padding:1rem;border-radius:6px;">
+                <legend style="padding:0 0.4rem;font-weight:600;">Choices</legend>
+
+                <!-- radio -->
+                <div style="display:flex;flex-direction:column;gap:0.3rem;">
+                  <span style="font-size:0.85rem;font-weight:600;">Preferred Contact Method</span>
+                  <label style="flex-direction:row;align-items:center;gap:0.4rem;font-weight:400;">
+                    <input type="radio" name="contact" value="email" checked /> Email
+                  </label>
+                  <label style="flex-direction:row;align-items:center;gap:0.4rem;font-weight:400;">
+                    <input type="radio" name="contact" value="phone" /> Phone
+                  </label>
+                  <label style="flex-direction:row;align-items:center;gap:0.4rem;font-weight:400;">
+                    <input type="radio" name="contact" value="post" /> Post
+                  </label>
+                </div>
+
+                <!-- checkbox -->
+                <div style="display:flex;flex-direction:column;gap:0.3rem;margin-top:0.5rem;">
+                  <span style="font-size:0.85rem;font-weight:600;">Interests (checkboxes)</span>
+                  <label style="flex-direction:row;align-items:center;gap:0.4rem;font-weight:400;">
+                    <input type="checkbox" name="interests" value="html" checked /> HTML
+                  </label>
+                  <label style="flex-direction:row;align-items:center;gap:0.4rem;font-weight:400;">
+                    <input type="checkbox" name="interests" value="css" /> CSS
+                  </label>
+                  <label style="flex-direction:row;align-items:center;gap:0.4rem;font-weight:400;">
+                    <input type="checkbox" name="interests" value="js" /> JavaScript
+                  </label>
+                </div>
+
+              </fieldset>
+
+              <fieldset style="border:1px solid #cbd5e1;padding:1rem;border-radius:6px;">
+                <legend style="padding:0 0.4rem;font-weight:600;">Select &amp; Textarea</legend>
+
+                <!-- select / option / optgroup -->
+                <label>
+                  Country
+                  <select name="country">
+                    <optgroup label="Europe">
+                      <option value="de">Germany</option>
+                      <option value="fr">France</option>
+                      <option value="uk" selected>United Kingdom</option>
+                    </optgroup>
+                    <optgroup label="Americas">
+                      <option value="us">United States</option>
+                      <option value="ca">Canada</option>
+                    </optgroup>
+                  </select>
+                </label>
+
+                <!-- select multiple -->
+                <label>
+                  Frameworks (multiple select — hold Ctrl/Cmd)
+                  <select name="frameworks" multiple size="4">
+                    <option value="react">React</option>
+                    <option value="vue" selected>Vue</option>
+                    <option value="angular">Angular</option>
+                    <option value="svelte" selected>Svelte</option>
+                    <option value="solid">SolidJS</option>
+                  </select>
+                </label>
+
+                <!-- textarea -->
+                <label>
+                  Message
+                  <textarea name="message" rows="4" placeholder="Your message here…" maxlength="500"></textarea>
+                </label>
+
+              </fieldset>
+
+              <fieldset style="border:1px solid #cbd5e1;padding:1rem;border-radius:6px;">
+                <legend style="padding:0 0.4rem;font-weight:600;">Progress &amp; Meter</legend>
+
+                <!-- progress -->
+                <label>
+                  Upload progress
+                  <progress value="70" max="100" style="width:100%">70%</progress>
+                </label>
+
+                <!-- meter -->
+                <label>
+                  Disk usage
+                  <meter value="0.72" min="0" max="1" low="0.3" high="0.8" optimum="0.1" style="width:100%">72%</meter>
+                </label>
+
+              </fieldset>
+
+              <fieldset style="border:1px solid #cbd5e1;padding:1rem;border-radius:6px;">
+                <legend style="padding:0 0.4rem;font-weight:600;">Special Inputs</legend>
+
+                <!-- readonly -->
+                <label>
+                  Read-only field
+                  <input type="text" name="readonly-field" value="This cannot be edited" readonly />
+                </label>
+
+                <!-- disabled -->
+                <label>
+                  Disabled field
+                  <input type="text" name="disabled-field" value="This is disabled" disabled />
+                </label>
+
+                <!-- hidden -->
+                <input type="hidden" name="token" value="abc123xyz" />
+                <p style="font-size:0.82rem;color:#64748b">A hidden input (type="hidden") is present above — value: <code>abc123xyz</code></p>
+
+                <!-- output -->
+                <label>
+                  Calculation Output
+                  <output name="result" for="range">
+                    Use the volume slider above to see output updating.
+                  </output>
+                </label>
+
+              </fieldset>
+
+              <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                <!-- submit -->
+                <button type="submit" style="padding:0.5rem 1.25rem;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.95rem;">Submit</button>
+                <!-- reset -->
+                <button type="reset" style="padding:0.5rem 1.25rem;background:#e2e8f0;color:#1a1a2e;border:none;border-radius:6px;cursor:pointer;font-size:0.95rem;">Reset</button>
+                <!-- button type button -->
+                <button type="button" onclick="alert('Custom button clicked!')" style="padding:0.5rem 1.25rem;background:#f59e0b;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:0.95rem;">Custom Action</button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;form action="/submit" method="post"&gt;
+
+  &lt;!-- fieldset + legend --&gt;
+  &lt;fieldset&gt;
+    &lt;legend&gt;Personal Info&lt;/legend&gt;
+
+    &lt;label for="name"&gt;Name&lt;/label&gt;
+    &lt;input type="text" id="name" name="name"
+           placeholder="Jane Doe" required /&gt;
+
+    &lt;label for="email"&gt;Email&lt;/label&gt;
+    &lt;input type="email" id="email" name="email" required /&gt;
+
+    &lt;label for="age"&gt;Age&lt;/label&gt;
+    &lt;input type="number" id="age" name="age"
+           min="1" max="120" step="1" /&gt;
+  &lt;/fieldset&gt;
+
+  &lt;!-- Various input types --&gt;
+  &lt;input type="password" name="pw" /&gt;
+  &lt;input type="tel"      name="phone" /&gt;
+  &lt;input type="url"      name="site" /&gt;
+  &lt;input type="search"   name="q" /&gt;
+  &lt;input type="date"     name="date" /&gt;
+  &lt;input type="time"     name="time" /&gt;
+  &lt;input type="datetime-local" name="dt" /&gt;
+  &lt;input type="month"    name="month" /&gt;
+  &lt;input type="week"     name="week" /&gt;
+  &lt;input type="range"    name="vol" min="0" max="100" step="5" /&gt;
+  &lt;input type="color"    name="color" /&gt;
+  &lt;input type="file"     name="files" multiple /&gt;
+  &lt;input type="hidden"   name="token" value="abc" /&gt;
+  &lt;input type="checkbox" name="agree" value="yes" /&gt;
+  &lt;input type="radio"    name="choice" value="a" /&gt;
+
+  &lt;!-- datalist --&gt;
+  &lt;input list="opts" name="lang" /&gt;
+  &lt;datalist id="opts"&gt;
+    &lt;option value="HTML" /&gt;
+    &lt;option value="CSS" /&gt;
+  &lt;/datalist&gt;
+
+  &lt;!-- select + optgroup --&gt;
+  &lt;select name="country"&gt;
+    &lt;optgroup label="Europe"&gt;
+      &lt;option value="de"&gt;Germany&lt;/option&gt;
+      &lt;option value="fr" selected&gt;France&lt;/option&gt;
+    &lt;/optgroup&gt;
+  &lt;/select&gt;
+
+  &lt;!-- textarea --&gt;
+  &lt;textarea name="msg" rows="4"
+            placeholder="Your message"
+            maxlength="500"&gt;&lt;/textarea&gt;
+
+  &lt;!-- progress --&gt;
+  &lt;progress value="70" max="100"&gt;70%&lt;/progress&gt;
+
+  &lt;!-- meter --&gt;
+  &lt;meter value="0.72" low="0.3" high="0.8"
+         optimum="0.1"&gt;72%&lt;/meter&gt;
+
+  &lt;!-- output --&gt;
+  &lt;output name="result" for="range"&gt;…&lt;/output&gt;
+
+  &lt;!-- buttons --&gt;
+  &lt;button type="submit"&gt;Submit&lt;/button&gt;
+  &lt;button type="reset"&gt;Reset&lt;/button&gt;
+  &lt;button type="button"&gt;Custom&lt;/button&gt;
+
+&lt;/form&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /forms -->
+
+
+    <!-- ─────────────────────────────────────────────
+         9. INTERACTIVE ELEMENTS
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="interactive">
+      <h2>9. Interactive Elements</h2>
+
+      <!-- details / summary -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;details&gt;, &lt;summary&gt;</div>
+        <div class="element-card-desc"><code>&lt;details&gt;</code> creates a disclosure widget. <code>&lt;summary&gt;</code> is the visible heading/toggle. Click to expand/collapse.</div>
+        <div class="element-card-demo"><label>Live example:</label>
+          <div class="demo-block">
+            <details>
+              <summary>What is the <code>&lt;details&gt;</code> element?</summary>
+              <p style="margin-top:0.5rem;padding-left:0.5rem;">The <code>&lt;details&gt;</code> element creates an accordion-style widget. The user can click the <code>&lt;summary&gt;</code> to toggle visibility of additional content.</p>
+            </details>
+            <details style="margin-top:0.5rem;">
+              <summary>Another expandable section</summary>
+              <ul style="margin-top:0.5rem;">
+                <li>Item one</li>
+                <li>Item two</li>
+                <li>Item three</li>
+              </ul>
+            </details>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;details&gt;
+  &lt;summary&gt;Click to expand&lt;/summary&gt;
+  &lt;p&gt;Hidden content revealed here.&lt;/p&gt;
+&lt;/details&gt;</code></pre></div>
+      </div>
+
+      <!-- dialog -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;dialog&gt;</div>
+        <div class="element-card-desc">Represents a dialog box or interactive sub-window. Use the <code>.showModal()</code> JS method to open it.</div>
+        <div class="element-card-demo"><label>Live example (click to open):</label>
+          <div class="demo-block">
+            <button type="button"
+                    onclick="document.getElementById('demo-dialog').showModal()"
+                    style="padding:0.4rem 1rem;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;">
+              Open Dialog
+            </button>
+
+            <dialog id="demo-dialog" class="demo-dialog">
+              <h3 style="margin-bottom:0.75rem;">Dialog Title</h3>
+              <p>This is a native <code>&lt;dialog&gt;</code> element opened with <code>showModal()</code>.</p>
+              <p style="margin-top:0.5rem;font-size:0.85rem;color:#64748b">Press <kbd style="border:1px solid #cbd5e1;padding:0.1rem 0.4rem;border-radius:3px;">Esc</kbd> or click the button below to close.</p>
+              <div style="margin-top:1rem;display:flex;gap:0.5rem;">
+                <button type="button"
+                        onclick="document.getElementById('demo-dialog').close()"
+                        style="padding:0.35rem 0.9rem;background:#2563eb;color:#fff;border:none;border-radius:6px;cursor:pointer;">
+                  Confirm
+                </button>
+                <button type="button"
+                        onclick="document.getElementById('demo-dialog').close()"
+                        style="padding:0.35rem 0.9rem;background:#e2e8f0;border:none;border-radius:6px;cursor:pointer;">
+                  Cancel
+                </button>
+              </div>
+            </dialog>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;button type="button"
+        onclick="document.getElementById('my-dialog').showModal()"&gt;
+  Open Dialog
+&lt;/button&gt;
+
+&lt;dialog id="my-dialog"&gt;
+  &lt;h2&gt;Dialog Title&lt;/h2&gt;
+  &lt;p&gt;Content of the dialog.&lt;/p&gt;
+  &lt;button onclick="document.getElementById('my-dialog').close()"&gt;
+    Close
+  &lt;/button&gt;
+&lt;/dialog&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /interactive -->
+
+
+    <!-- ─────────────────────────────────────────────
+         10. SCRIPTING AND TEMPLATES
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="scripting">
+      <h2>10. Scripting and Templates</h2>
+
+      <!-- script -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;script&gt;</div>
+        <div class="element-card-desc">Embeds or references executable JavaScript code. Use <code>defer</code> or <code>async</code> for external scripts to avoid blocking rendering.</div>
+        <div class="element-card-demo"><label>Example:</label>
+          <div class="demo-block">
+            <p id="script-demo-output">Click to run script:</p>
+            <button type="button"
+                    onclick="document.getElementById('script-demo-output').textContent = 'Script ran at: ' + new Date().toLocaleTimeString()"
+                    style="padding:0.35rem 0.9rem;background:#0f766e;color:#fff;border:none;border-radius:6px;cursor:pointer;margin-top:0.4rem;">
+              Run JavaScript
+            </button>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- Inline script --&gt;
+&lt;script&gt;
+  console.log("Hello from inline script");
+&lt;/script&gt;
+
+&lt;!-- External script (deferred) --&gt;
+&lt;script src="app.js" defer&gt;&lt;/script&gt;
+
+&lt;!-- External script (async) --&gt;
+&lt;script src="analytics.js" async&gt;&lt;/script&gt;</code></pre></div>
+      </div>
+
+      <!-- noscript -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;noscript&gt;</div>
+        <div class="element-card-desc">Provides fallback content when JavaScript is disabled or unavailable in the browser.</div>
+        <div class="element-card-demo"><label>Note:</label>
+          <div class="demo-block">Since JS is enabled in your browser, the <code>&lt;noscript&gt;</code> content below is hidden:
+            <noscript><p style="color:#b91c1c;font-weight:bold;">JavaScript is disabled — please enable it for the full experience.</p></noscript>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;noscript&gt;
+  &lt;p&gt;Please enable JavaScript to view this content.&lt;/p&gt;
+&lt;/noscript&gt;</code></pre></div>
+      </div>
+
+      <!-- canvas -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;canvas&gt;</div>
+        <div class="element-card-desc">Provides a bitmap drawing surface that can be drawn on via the Canvas 2D or WebGL APIs.</div>
+        <div class="element-card-demo"><label>Live drawing example:</label>
+          <div class="demo-block">
+            <canvas id="demo-canvas" class="canvas-demo" width="380" height="160"
+                    aria-label="Canvas drawing showing colored rectangles and a circle"></canvas>
+            <script>
+              (function() {
+                var canvas = document.getElementById('demo-canvas');
+                if (!canvas.getContext) return;
+                var ctx = canvas.getContext('2d');
+
+                // Background
+                ctx.fillStyle = '#0f172a';
+                ctx.fillRect(0, 0, 380, 160);
+
+                // Colored rectangles
+                var colors = ['#f43f5e','#fb923c','#fbbf24','#34d399','#38bdf8','#818cf8'];
+                colors.forEach(function(c, i) {
+                  ctx.fillStyle = c;
+                  ctx.fillRect(20 + i * 58, 20, 46, 120);
+                });
+
+                // Circle overlay
+                ctx.beginPath();
+                ctx.arc(190, 80, 50, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255,255,255,0.15)';
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Text
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 14px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('canvas', 190, 84);
+              })();
+            </script>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;canvas id="myCanvas" width="380" height="160"
+        aria-label="Canvas drawing"&gt;&lt;/canvas&gt;
+
+&lt;script&gt;
+  const canvas = document.getElementById('myCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // Draw a rectangle
+  ctx.fillStyle = '#3b82f6';
+  ctx.fillRect(20, 20, 100, 60);
+
+  // Draw a circle
+  ctx.beginPath();
+  ctx.arc(200, 80, 40, 0, Math.PI * 2);
+  ctx.fillStyle = '#f59e0b';
+  ctx.fill();
+&lt;/script&gt;</code></pre></div>
+      </div>
+
+      <!-- svg -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;svg&gt;</div>
+        <div class="element-card-desc">Embeds Scalable Vector Graphics directly in HTML. SVG is resolution-independent and fully styleable with CSS.</div>
+        <div class="element-card-demo"><label>Inline SVG example:</label>
+          <div class="demo-block">
+            <svg width="300" height="120" viewBox="0 0 300 120"
+                 xmlns="http://www.w3.org/2000/svg"
+                 aria-label="SVG demo showing shapes and text"
+                 role="img">
+              <title>SVG Demo</title>
+              <rect x="0" y="0" width="300" height="120" fill="#1e293b" rx="6" />
+              <circle cx="60" cy="60" r="40" fill="#3b82f6" opacity="0.85" />
+              <rect x="115" y="20" width="60" height="60" fill="#f59e0b" rx="4" opacity="0.85" />
+              <polygon points="240,20 280,100 200,100" fill="#34d399" opacity="0.85" />
+              <text x="150" y="112" text-anchor="middle"
+                    font-family="sans-serif" font-size="11" fill="#94a3b8">
+                circle · rect · triangle — inline SVG
+              </text>
+            </svg>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;svg width="300" height="120" viewBox="0 0 300 120"
+     xmlns="http://www.w3.org/2000/svg"
+     aria-label="SVG shapes demo" role="img"&gt;
+  &lt;title&gt;SVG Demo&lt;/title&gt;
+  &lt;circle cx="60" cy="60" r="40" fill="#3b82f6" /&gt;
+  &lt;rect x="115" y="20" width="60" height="60" fill="#f59e0b" /&gt;
+  &lt;polygon points="240,20 280,100 200,100" fill="#34d399" /&gt;
+&lt;/svg&gt;</code></pre></div>
+      </div>
+
+      <!-- template -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;template&gt;</div>
+        <div class="element-card-desc">Holds HTML that is not rendered when the page loads. Content is cloned with JavaScript and inserted into the document.</div>
+        <div class="element-card-demo"><label>Live template clone example:</label>
+          <div class="demo-block">
+            <template id="card-tpl">
+              <div style="border:1px solid #e2e8f0;border-radius:6px;padding:0.6rem 0.9rem;margin-bottom:0.5rem;background:#f8fafc;">
+                <strong class="tpl-title"></strong>
+                <p class="tpl-body" style="margin:0.2rem 0 0;font-size:0.85rem;color:#475569;"></p>
+              </div>
+            </template>
+
+            <div id="template-container"></div>
+            <button type="button" id="add-card-btn"
+                    style="padding:0.35rem 0.9rem;background:#7c3aed;color:#fff;border:none;border-radius:6px;cursor:pointer;">
+              Add Card from Template
+            </button>
+            <script>
+              (function() {
+                var btn = document.getElementById('add-card-btn');
+                var container = document.getElementById('template-container');
+                var tpl = document.getElementById('card-tpl');
+                var count = 0;
+                btn.addEventListener('click', function() {
+                  count++;
+                  var clone = tpl.content.cloneNode(true);
+                  clone.querySelector('.tpl-title').textContent = 'Card #' + count;
+                  clone.querySelector('.tpl-body').textContent = 'Cloned from <template> at ' + new Date().toLocaleTimeString();
+                  container.appendChild(clone);
+                });
+              })();
+            </script>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;template id="card-tpl"&gt;
+  &lt;div class="card"&gt;
+    &lt;strong class="tpl-title"&gt;&lt;/strong&gt;
+    &lt;p class="tpl-body"&gt;&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;div id="container"&gt;&lt;/div&gt;
+&lt;button onclick="addCard()"&gt;Add Card&lt;/button&gt;
+
+&lt;script&gt;
+  function addCard() {
+    const tpl = document.getElementById('card-tpl');
+    const clone = tpl.content.cloneNode(true);
+    clone.querySelector('.tpl-title').textContent = 'New Card';
+    clone.querySelector('.tpl-body').textContent = 'Cloned from template';
+    document.getElementById('container').appendChild(clone);
+  }
+&lt;/script&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /scripting -->
+
+
+    <!-- ─────────────────────────────────────────────
+         11. RUBY AND ANNOTATIONS
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="ruby">
+      <h2>11. Ruby and Annotations</h2>
+
+      <div class="element-card">
+        <div class="element-card-header">&lt;ruby&gt;, &lt;rt&gt;, &lt;rp&gt;</div>
+        <div class="element-card-desc">
+          <code>&lt;ruby&gt;</code> wraps the base text and its annotation. <code>&lt;rt&gt;</code> holds the ruby text (pronunciation guide shown above the base). <code>&lt;rp&gt;</code> provides fallback parentheses for browsers that don't support ruby.
+        </div>
+        <div class="element-card-demo"><label>Live example (Japanese kanji with furigana):</label>
+          <div class="demo-block" style="font-size:1.4rem;line-height:2.5;">
+            <ruby>
+              漢<rp>(</rp><rt>かん</rt><rp>)</rp>
+              字<rp>(</rp><rt>じ</rt><rp>)</rp>
+            </ruby>
+            &nbsp;
+            <ruby>
+              日本語<rp>(</rp><rt>にほんご</rt><rp>)</rp>
+            </ruby>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- Ruby with fallback parentheses --&gt;
+&lt;ruby&gt;
+  漢&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;かん&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;
+  字&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;じ&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;
+&lt;/ruby&gt;
+
+&lt;!-- Ruby for a whole word --&gt;
+&lt;ruby&gt;
+  日本語&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;にほんご&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;
+&lt;/ruby&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /ruby -->
+
+
+    <!-- ─────────────────────────────────────────────
+         12. WEB COMPONENTS
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="webcomponents">
+      <h2>12. Web Components Related Element</h2>
+
+      <!-- slot -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;slot&gt;</div>
+        <div class="element-card-desc">
+          A placeholder inside a Web Component's shadow DOM that lets users inject their own content. Only meaningful inside a Shadow DOM; shown here as a structural reference.
+        </div>
+        <div class="element-card-demo"><label>Functional Web Component with &lt;slot&gt;:</label>
+          <div class="demo-block">
+            <div id="slot-demo-host" class="slot-host"></div>
+            <script>
+              (function() {
+                var host = document.getElementById('slot-demo-host');
+                var shadow = host.attachShadow({ mode: 'open' });
+                shadow.innerHTML = [
+                  '<style>',
+                  '  .wc-card { border: 2px solid #7c3aed; border-radius: 8px; padding: 0.75rem 1rem; background: #faf5ff; }',
+                  '  .wc-card h4 { margin: 0 0 0.4rem; color: #7c3aed; font-size: 0.9rem; text-transform: uppercase; }',
+                  '</style>',
+                  '<div class="wc-card">',
+                  '  <h4>Web Component Shadow DOM</h4>',
+                  '  <slot>Fallback content if nothing is slotted</slot>',
+                  '</div>'
+                ].join('');
+
+                // Project light DOM content into the slot
+                var light = document.createElement('p');
+                light.textContent = 'This paragraph is projected into the <slot> from the Light DOM.';
+                host.appendChild(light);
+              })();
+            </script>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- Define a custom element with shadow DOM + slot --&gt;
+&lt;script&gt;
+class MyCard extends HTMLElement {
+  constructor() {
+    super();
+    const shadow = this.attachShadow({ mode: 'open' });
+    shadow.innerHTML = `
+      &lt;style&gt;
+        .card { border: 2px solid purple; padding: 1rem; border-radius: 8px; }
+      &lt;/style&gt;
+      &lt;div class="card"&gt;
+        &lt;slot&gt;Default fallback content&lt;/slot&gt;
+      &lt;/div&gt;
+    `;
+  }
+}
+customElements.define('my-card', MyCard);
+&lt;/script&gt;
+
+&lt;!-- Use the custom element — light DOM content fills the slot --&gt;
+&lt;my-card&gt;
+  &lt;p&gt;This text is projected via &lt;slot&gt;&lt;/p&gt;
+&lt;/my-card&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /webcomponents -->
+
+
+    <!-- ─────────────────────────────────────────────
+         13. DEPRECATED OR OBSOLETE ELEMENTS
+    ───────────────────────────────────────────────── -->
+    <section class="ref-section" id="deprecated">
+      <h2>13. Deprecated or Obsolete Elements <span class="deprecated-badge">DEPRECATED</span></h2>
+      <p style="background:#fee2e2;border:1px solid #fca5a5;padding:0.75rem 1rem;border-radius:6px;margin-bottom:1.5rem;font-size:0.9rem;">
+        ⚠️ The following elements are <strong>deprecated or obsolete</strong> in HTML5. Do <strong>not</strong> use them in new projects. Modern CSS or semantic alternatives should be used instead.
+      </p>
+
+      <!-- font -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;font&gt; <span class="deprecated-badge">DEPRECATED</span></div>
+        <div class="element-card-desc">Used to set font face, color, and size. Replaced by CSS <code>font-family</code>, <code>color</code>, and <code>font-size</code>.</div>
+        <div class="element-card-demo"><label>Historical example (do not use):</label>
+          <div class="demo-block" style="opacity:0.7">
+            <!-- intentional use for documentation purposes only -->
+            <font color="red" size="4" face="Arial">Old-style red text</font>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- ❌ Deprecated --&gt;
+&lt;font color="red" size="4" face="Arial"&gt;Text&lt;/font&gt;
+
+&lt;!-- ✅ Use CSS instead --&gt;
+&lt;p style="color: red; font-size: 1.2rem; font-family: Arial, sans-serif;"&gt;Text&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- center -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;center&gt; <span class="deprecated-badge">DEPRECATED</span></div>
+        <div class="element-card-desc">Horizontally centered its content. Replaced by CSS <code>text-align: center</code> or <code>margin: 0 auto</code>.</div>
+        <div class="element-card-demo"><label>Historical example (do not use):</label>
+          <div class="demo-block" style="opacity:0.7">
+            <center>Centered text — deprecated</center>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- ❌ Deprecated --&gt;
+&lt;center&gt;Centered content&lt;/center&gt;
+
+&lt;!-- ✅ Use CSS instead --&gt;
+&lt;p style="text-align: center;"&gt;Centered content&lt;/p&gt;</code></pre></div>
+      </div>
+
+      <!-- big -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;big&gt; <span class="deprecated-badge">DEPRECATED</span></div>
+        <div class="element-card-desc">Made text one size larger. Replaced by CSS <code>font-size</code>.</div>
+        <div class="element-card-demo"><label>Historical example (do not use):</label>
+          <div class="demo-block" style="opacity:0.7">
+            Normal text and <big>bigger text</big> — deprecated
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- ❌ Deprecated --&gt;
+&lt;big&gt;Bigger text&lt;/big&gt;
+
+&lt;!-- ✅ Use CSS instead --&gt;
+&lt;span style="font-size: 1.3em;"&gt;Bigger text&lt;/span&gt;</code></pre></div>
+      </div>
+
+      <!-- strike -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;strike&gt; <span class="deprecated-badge">DEPRECATED</span></div>
+        <div class="element-card-desc">Drew a strikethrough line through text. Replaced by <code>&lt;s&gt;</code> or <code>&lt;del&gt;</code>.</div>
+        <div class="element-card-demo"><label>Historical example (do not use):</label>
+          <div class="demo-block" style="opacity:0.7">
+            <strike>Struck-through text — deprecated</strike>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- ❌ Deprecated --&gt;
+&lt;strike&gt;Crossed out&lt;/strike&gt;
+
+&lt;!-- ✅ Use &lt;s&gt; for no-longer-relevant text --&gt;
+&lt;s&gt;No longer relevant&lt;/s&gt;
+
+&lt;!-- ✅ Use &lt;del&gt; for editorially deleted text --&gt;
+&lt;del&gt;Deleted from document&lt;/del&gt;</code></pre></div>
+      </div>
+
+      <!-- tt -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;tt&gt; <span class="deprecated-badge">DEPRECATED</span></div>
+        <div class="element-card-desc">Rendered text in a monospace "teletype" font. Replaced by <code>&lt;code&gt;</code>, <code>&lt;kbd&gt;</code>, <code>&lt;samp&gt;</code>, or CSS <code>font-family: monospace</code>.</div>
+        <div class="element-card-demo"><label>Historical example (do not use):</label>
+          <div class="demo-block" style="opacity:0.7">
+            <tt>Teletype font — deprecated</tt>
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- ❌ Deprecated --&gt;
+&lt;tt&gt;Monospace text&lt;/tt&gt;
+
+&lt;!-- ✅ Use semantic alternatives --&gt;
+&lt;code&gt;inline code&lt;/code&gt;
+&lt;kbd&gt;keyboard input&lt;/kbd&gt;
+&lt;samp&gt;program output&lt;/samp&gt;</code></pre></div>
+      </div>
+
+      <!-- acronym -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;acronym&gt; <span class="deprecated-badge">DEPRECATED</span></div>
+        <div class="element-card-desc">Was used to mark acronyms. Replaced by <code>&lt;abbr&gt;</code> which handles both abbreviations and acronyms.</div>
+        <div class="element-card-demo"><label>Historical example (do not use):</label>
+          <div class="demo-block" style="opacity:0.7">
+            <acronym title="World Wide Web">WWW</acronym> — deprecated
+          </div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- ❌ Deprecated --&gt;
+&lt;acronym title="World Wide Web"&gt;WWW&lt;/acronym&gt;
+
+&lt;!-- ✅ Use &lt;abbr&gt; instead --&gt;
+&lt;abbr title="World Wide Web"&gt;WWW&lt;/abbr&gt;</code></pre></div>
+      </div>
+
+      <!-- frameset / frame -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;frameset&gt;, &lt;frame&gt;, &lt;noframes&gt; <span class="deprecated-badge">DEPRECATED</span></div>
+        <div class="element-card-desc">Divided the browser window into multiple frames, each loading a separate HTML document. Entirely replaced by <code>&lt;iframe&gt;</code> and modern CSS layout.</div>
+        <div class="element-card-demo"><label>Note:</label>
+          <div class="demo-block" style="opacity:0.7">These elements cannot be safely demonstrated on a live page. Use <code>&lt;iframe&gt;</code> for embedded documents.</div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- ❌ Deprecated — do not use --&gt;
+&lt;frameset cols="50%,50%"&gt;
+  &lt;frame src="left.html" /&gt;
+  &lt;frame src="right.html" /&gt;
+  &lt;noframes&gt;&lt;p&gt;Your browser does not support frames.&lt;/p&gt;&lt;/noframes&gt;
+&lt;/frameset&gt;
+
+&lt;!-- ✅ Use &lt;iframe&gt; or CSS layout instead --&gt;
+&lt;div style="display: grid; grid-template-columns: 1fr 1fr;"&gt;
+  &lt;iframe src="left.html" title="Left panel"&gt;&lt;/iframe&gt;
+  &lt;iframe src="right.html" title="Right panel"&gt;&lt;/iframe&gt;
+&lt;/div&gt;</code></pre></div>
+      </div>
+
+      <!-- bgsound -->
+      <div class="element-card">
+        <div class="element-card-header">&lt;bgsound&gt; <span class="deprecated-badge">DEPRECATED / IE only</span></div>
+        <div class="element-card-desc">An Internet Explorer-only element that played background audio. Never part of the HTML standard. Use <code>&lt;audio&gt;</code> instead.</div>
+        <div class="element-card-demo"><label>Note:</label>
+          <div class="demo-block" style="opacity:0.7">IE-only, never standardised. Use <code>&lt;audio autoplay loop&gt;</code> with user consent.</div>
+        </div>
+        <div class="element-card-code"><pre><code>&lt;!-- ❌ Never standardised / IE-only --&gt;
+&lt;bgsound src="music.mid" loop="-1" /&gt;
+
+&lt;!-- ✅ Use &lt;audio&gt; instead --&gt;
+&lt;audio src="music.mp3" autoplay loop&gt;&lt;/audio&gt;</code></pre></div>
+      </div>
+
+    </section><!-- /deprecated -->
+
+  </main><!-- /main -->
+
+
+  <!-- ══════════════════ FOOTER ══════════════════ -->
+  <footer class="site-footer">
+    <p>HTML Element Reference &mdash; A complete educational showcase of HTML5 elements &bull; No frameworks &bull; No external assets</p>
+  </footer>
+
+</div><!-- /page-wrapper -->
+</body>
+</html>
